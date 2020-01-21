@@ -1,0 +1,42 @@
+###############################################################################
+#                          Generated for the project                         #
+###############################################################################
+version: "3.1"
+services:
+
+    redis:
+      image: redis:alpine
+      container_name: symfony34-docker-redis
+
+    mariadb:
+      image: mariadb:10.4
+      container_name: symfony34-docker-mariadb
+      working_dir: /application
+      volumes:
+        - .:/application
+      environment:
+        - MYSQL_ROOT_PASSWORD=reza1234
+        - MYSQL_DATABASE=symfony34-docker
+        - MYSQL_USER=reza
+        - MYSQL_PASSWORD=reza1234
+      ports:
+        - "8083:3306"
+
+    webserver:
+      image: nginx:alpine
+      container_name: symfony34-docker-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8080:80"
+
+    php-fpm:
+      build: docker/php-fpm
+      container_name: symfony34-docker-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+
