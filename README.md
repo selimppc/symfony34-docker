@@ -13,34 +13,33 @@ run the following command in your terminal
 $ docker-compose up -d
 ```
 
+# Run application in browser
+
 Hit the URL in browser: `http://localhost:8080`
 
 
-
-# Docker compose cheatsheet #
+# Console Command in terminal:
 
 ```
-$ docker-compose up -d  // Start containers in the background
+$ php bin/console identification-requests:process input.csv
 
-$ docker-compose up //Start containers on the foreground
-
-$ docker-compose stop //Stop containers
-
-$ docker-compose kill //Kill containers
-
-$ docker-compose logs //View container logs
+*** input.csv file location is in :: src/AppBundle/Command/input.csv
 
 ```
 
- #### Execute command inside of container: 
- 
- ```
-$ docker-compose exec SERVICE_NAME COMMAND
-
-$ docker-compose exec php-fpm bash // PHP shell
-
-$ docker-compose exec php-fpm bin/console //Runsymfony console 
-
-$ docker-compose exec mysql mysql -uroot -pCHOSEN_ROOT_PASSWORD //open a mysql shell
+# Auto-wiring 
 ```
- 
+$  php bin/console debug:autowiring
+```
+
+# Sample Data  ( code Level )
+```
+  $data['requestDate'] = $line[0]; //identification request date in format Y-m-d
+  $data['countryCode'] = $line[1]; //identity document country code
+  $data['documentType'] = $line[2]; //identity document type
+  $data['documentNumber'] = $line[3]; //identity document number
+  $data['issueDate'] = $line[4];  //identity document issue date in format Y-m-d
+  $data['personalIdentificationNumber'] = $line[5]; //identity document owner's personal identification number
+  
+```
+  
