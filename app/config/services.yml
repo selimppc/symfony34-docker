@@ -35,6 +35,10 @@ services:
     #         $someArgument: 'some_value'
 
 
-    AppBundle\Service\DocumentValidator:
-        arguments:
-            $logger: '@monolog.logger.request'
+    document.validator:
+        class: AppBundle\Service\DocumentValidator
+        arguments: ['@monolog.logger.request']
+
+    identify.request.command:
+        class: AppBundle\Command\IdentificationRequestsCommand
+        arguments: ['@monolog.logger.request', '@document.validator']

@@ -43,3 +43,30 @@ $  php bin/console debug:autowiring
   
 ```
   
+# PHP Unit TEST 
+
+Pre-Requirement::
+Make sure you have installed `phpunit` in you machine. I have install in my `OSX` by the following command:
+```
+$ brew install phpunit
+```
+
+# RUN PHPUNIT TEST
+in terminal go to the project directory and run the following command
+```
+$ phpunit 
+
+or 
+
+$ phpunit tests/AppBundle/Directory__NAME/CLASS__NAME 
+e.g. : $ phpunit tests/AppBundle/Controller
+``` 
+
+
+# Install PHPUNIT version 6.5 
+```
+$ wget https://phar.phpunit.de/phpunit-6.5.phar
+$ chmod +x phpunit-6.5.phar
+$ sudo mv phpunit-6.5.phar /usr/local/bin/phpunit
+$ phpunit --version
+```

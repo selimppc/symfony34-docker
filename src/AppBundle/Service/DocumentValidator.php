@@ -7,6 +7,10 @@ namespace AppBundle\Service;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
+/**
+ * Class DocumentValidator
+ * @package AppBundle\Service
+ */
 class DocumentValidator
 {
     /**

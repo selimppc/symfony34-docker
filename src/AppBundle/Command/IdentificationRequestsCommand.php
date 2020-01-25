@@ -14,12 +14,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 
-
+/**
+ * Class IdentificationRequestsCommand
+ * @package AppBundle\Command
+ */
 class IdentificationRequestsCommand extends Command
 {
     protected static $defaultName = 'identification-requests:process';
     private $logger;
-    private $requiredInputFile;
     private $documentValidator;
 
 
@@ -33,14 +35,12 @@ class IdentificationRequestsCommand extends Command
     /**
      * IdentificationRequestsCommand constructor.
      * @param LoggerInterface $logger
-     * @param null $requiredInputFile
+     * @param DocumentValidator $documentValidator
      */
-    public function __construct(LoggerInterface $logger, $requiredInputFile = NULL, DocumentValidator $documentValidator)
+    public function __construct(LoggerInterface $logger, DocumentValidator $documentValidator)
     {
         $this->logger = $logger;
-        $this->requiredInputFile = $requiredInputFile;
         $this->documentValidator = $documentValidator;
-
         // you *must* call the parent constructor
         parent::__construct();
     }
@@ -50,7 +50,7 @@ class IdentificationRequestsCommand extends Command
      */
     protected function configure()
     {
-        $this->addArgument('input', InputArgument::REQUIRED, 'CSV file is required.')
+        $this->addArgument('input.csv', InputArgument::REQUIRED, 'CSV file is required.')
             ->setDescription('Identification Request from CSV')
             ->setHelp('php bin/console identification-requests:process input.csv')
         ;
