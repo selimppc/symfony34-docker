@@ -7,6 +7,7 @@ namespace AppBundle\Command;
 use AppBundle\Service\DocumentValidator;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -64,11 +65,20 @@ class IdentificationRequestsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('... CSV Parsing ... ');
+
         // use the parseCSV() function
         $csv = $this->parseCSV();
+
         # process to validate
-        $this->parsedDataToArray($csv, $output);
-        $io->title('... Good Bye ... ');
+        $processing = $this->parsedDataToArray($csv, $output);
+
+        # progressBar
+        $progressbar = new ProgressBar($output);
+        $progressbar->start(count($csv));
+        $progressbar->advance($processing);
+        $progressbar->finish();
+
+        $io->title("\n... Good Bye ... ");
         return 0;
     }
 
