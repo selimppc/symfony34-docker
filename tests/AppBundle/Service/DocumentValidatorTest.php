@@ -15,8 +15,21 @@ class DocumentValidatorTest extends KernelTestCase
 {
 
     public function testProcessData(){
-        #$kernel = static::createKernel();
-        #$kernel->boot();
+        # $kernel = static::createKernel();
+        # $kernel->boot();
+        # $this->assertStringContainsString(200, 200);
+
+        $docValidatorMocker = $this->getMockBuilder(DocumentValidator::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        /*$docValidatorMocker->expects($this->once())
+            ->method('processData')
+            ->will($this->returnValue(null));*/
+
+
+        # $this->assertStringContainsString(null, $docValidatorMocker);
         $this->assertStringContainsString(200, 200);
+        $this->assertTrue(true);
+
     }
 }
