@@ -8,10 +8,6 @@ use AppBundle\Service\DocumentValidator;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
 
@@ -43,42 +39,29 @@ class IdentificationRequestsCommandTest extends KernelTestCase
 //        $documentValidatorMock = $this->getMockBuilder(DocumentValidator::class)
 //            ->disableOriginalConstructor()
 //            ->getMock();
-//
-//        $kernel = $this->createKernel();
-//        $kernel->boot();
-//
-//        $application = new Application($kernel);
-//        $application->add(new IdentificationRequestsCommand($loggerMock, $documentValidatorMock));
-//
-//        $command = $application->find(IDENTITY_REQUESTS_PROCESS);
-//        $commandTester = new CommandTester($command);
-//        $commandTester->execute(array(
-//            'command'  => $command->getName(),
-//            'input.csv' => 'input.csv',
-//        ));
-//
-//        $output = $commandTester->getDisplay();
-//        $this->assertContains('valid', $output);
 
-        $identificationRequestCommandMock =  $this->getMockBuilder(IdentificationRequestsCommand::class)
-            ->disableOriginalConstructor()
-            ->getMock();
 
-        $kernel = static::createKernel();
-        $kernel->boot();
-
+        $kernel      = self::bootKernel();
         $application = new Application($kernel);
-        $application->add($identificationRequestCommandMock);
 
-        $command = $application->find('identification-requests:process')
-            ->addArgument('input.csv', InputArgument::REQUIRED, "input.csv");
+        $eCommand = self::$kernel->getContainer()->get(
+            IdentificationRequestsCommand::class
+        );
+
+        $application->add($eCommand);
+
+        $command       = $application->find('identification-requests:process');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array(
-                                    'command' => $command->getName()
-                                ));
+        $commandTester->execute(
+            [
+                'command' => $command->getName(),
+                'input.csv' => 'input.csv'
+            ]
+        );
 
-        $output = $commandTester->getOutput();
-        $this->assertContains('valid',$output);
+        // the output of the command in the console
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('valid', $output);
     }
 
 }

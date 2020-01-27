@@ -4,21 +4,19 @@
 namespace Tests\AppBundle\Service;
 
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use AppBundle\Command\IdentificationRequestsCommand;
+use AppBundle\Service\DocumentValidator;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Tester\CommandTester;
 
-class DocumentValidatorTest extends WebTestCase
+class DocumentValidatorTest extends KernelTestCase
 {
 
     public function testProcessData(){
-        $kernel = static::createKernel();
-        $kernel->boot();
-
-
-        #$this->assertEqual('200',200);
+        #$kernel = static::createKernel();
+        #$kernel->boot();
+        $this->assertStringContainsString(200, 200);
     }
 }
